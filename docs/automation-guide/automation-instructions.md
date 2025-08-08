@@ -172,7 +172,72 @@ Para cada novo endpoint, SEMPRE perguntar:
 5. Dependências?
 ```
 
+### 4. Padrões de Implementação - OBRIGATÓRIOS
+
+#### **Requests - SEMPRE usar a classe base**
+❌ **ERRADO - Não fazer:**
+```javascript
+class MemberRequests {
+  constructor() {
+    this.baseUrl = '...';
+  }
+  
+  getMemberLinks() {
+    return cy.request({
+      method: 'GET',
+      url: url,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+}
+module.exports = new MemberRequests();
+```
+
+✅ **CORRETO - Sempre seguir este padrão:**
+```javascript
+import Requests from './requests';
+
+class MemberRequests {
+    static baseUrl = Cypress.env('API_BASE_URL') || '/api/v1';
+
+    static getMemberLinks(options = {}) {
+        const { memberLinkId, ...requestOptions } = options;
+        let url = `${this.baseUrl}/member-link`;
+        
+        if (memberLinkId) {
+            url += `?memberLinkId=${memberLinkId}`;
+        }
+
+        return Requests.get(url, {
+            failOnStatusCode: false,
+            ...requestOptions
+        });
+    }
+}
+
+export default MemberRequests;
+```
+
+#### **Step Definitions - Sempre importar corretamente**
+✅ **CORRETO:**
+```javascript
+import MemberRequests from '../../support/requests/memberRequests';
+// Usar: MemberRequests.getMemberLinks()
+```
+
+❌ **ERRADO:**
+```javascript
+const memberRequests = require('../../support/requests/memberRequests');
+// Não usar require para classes que exportam com export default
+```
+
+#### **Schemas - Seguir padrão de nomenclatura**
+- Arquivo: `member-schemas.js`
+- Exports: `memberLinkSchema`, `getMemberLinksRspSchema`
+- Uso nos testes: `"getMemberLinksRsp"` (sem Schema no final)
+
 ## Documentação Relacionada
 - Padrões de implementação: '/docs/patterns/'
+- **Padrões de Requests**: '/docs/patterns/request-patterns.md'
 - Decisões arquiteturais: '/docs/adr/'
 - Guia completo SOT/COT: '/docs/automation-guide/sot-cot-guide.md'
