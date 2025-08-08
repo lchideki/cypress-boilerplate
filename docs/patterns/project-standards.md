@@ -1,10 +1,22 @@
 # Project Standards
 
-## Feature Files
+## Feature Files - REGRA FUNDAMENTAL
 
+### Estrutura Obrigatória: Um Feature por Endpoint
 1. **Location**: `cypress/e2e/features/`
-2. **Naming**: `{domain}-api.feature`
-3. **Structure**:
+2. **Naming**: `{method}-{endpoint}.feature` (ex: `get-members.feature`, `post-member-link.feature`)
+3. **REGRA**: **CADA ENDPOINT = UM ARQUIVO .feature**
+
+### Exemplos de Nomenclatura:
+```
+GET /members          → get-members.feature
+POST /members         → post-members.feature  
+GET /members/{id}     → get-members-by-id.feature
+PUT /member-link      → put-member-link.feature
+GET /member-link      → get-member-link.feature
+```
+
+### Estrutura de Feature:
    ```gherkin
    @domain @operation
    Feature: Domain Operation
