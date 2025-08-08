@@ -32,6 +32,19 @@ A comprehensive API testing framework built with Cypress, featuring structured d
 
 This framework includes a dedicated `docs` directory that provides comprehensive guidance for AI-assisted testing:
 
+### IDE/Editor AI Integration
+
+The project includes AI agent configuration files for different editors:
+
+- **VS Code**: The `.github` folder contains instructions for GitHub Copilot to work in agent mode
+- **Other Editors**: 
+  - Cursor: Create a `.cursor` folder with appropriate agent instructions
+  - Other IDEs: Configure according to your editor's AI agent specifications
+
+For maximum benefit, configure your editor's AI assistant according to its documentation.
+
+### Documentation Structure
+
 - **Architecture Decision Records (ADRs)**
   - Contains all architectural decisions and their rationale
   - Helps understand the core project decisions
