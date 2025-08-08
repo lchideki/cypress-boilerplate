@@ -58,7 +58,16 @@ This framework includes a dedicated `docs` directory that provides comprehensive
    npm install
    ```
 
-3. Review the documentation in the `/docs` folder:
+3. Run Cypress:
+   ```bash
+   # Open Cypress Test Runner
+   npm run cypress:open
+
+   # Run tests in headless mode
+   npm run cypress:run
+   ```
+
+4. Review the documentation in the `/docs` folder:
    - Start with `/docs/setup/quick-start.md`
    - Review ADRs in `/docs/adr/`
    - Check automation guides in `/docs/automation-guide/`
