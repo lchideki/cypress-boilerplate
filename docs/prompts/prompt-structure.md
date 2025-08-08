@@ -84,14 +84,59 @@ Pensamento: "Para implementar os testes, vou:"
             └── Criar cenários BDD
 ```
 
-### 4. Validação
+### 4. Validação e Confirmação
 ```gherkin
 Pensamento: "Para garantir a qualidade, preciso:"
-└── Validar independência dos testes
-    └── Verificar limpeza de dados
-        └── Confirmar cobertura de cenários
-            └── Testar em diferentes ambientes
+└── **CONFIRMAR PLANO COM O USUÁRIO**
+    └── Validar independência dos testes
+        └── Verificar limpeza de dados
+            └── Confirmar cobertura de cenários
+                └── Testar em diferentes ambientes
 ```
+
+## ⚠️ REGRA FUNDAMENTAL: Confirmação do Plano
+
+**SEMPRE antes de executar qualquer automação:**
+
+### 1. Apresentar o Plano Completo
+```markdown
+📋 **PLANO DE EXECUÇÃO**
+
+**Estrutura que será criada:**
+```
+cypress/e2e/features/
+├── get-products.feature      # Cenários: busca, filtros, paginação
+├── post-products.feature     # Cenários: criação, validações
+└── put-products-id.feature   # Cenários: atualização
+
+cypress/support/
+├── schemas/products-schemas.js
+├── requests/productRequests.js
+└── step_definitions/products.js
+```
+
+**Cenários que serão implementados:**
+- GET /products: busca com sucesso, filtros, erro 401
+- POST /products: criação válida, dados inválidos, erro 422
+- PUT /products/{id}: atualização válida, ID inexistente
+```
+
+### 2. Perguntar Explicitamente
+```
+🤔 **CONFIRMAÇÃO NECESSÁRIA**
+
+Você gostaria de alterar algo neste plano antes de eu executar?
+
+Exemplos de alterações:
+✏️ Adicionar/remover cenários específicos
+📁 Modificar estrutura de arquivos  
+🔍 Incluir validações adicionais
+📋 Ajustar nomenclaturas
+```
+
+### 3. Aguardar Confirmação
+- ✅ **SIM** → Proceder com implementação
+- ❌ **NÃO** → Aguardar ajustes solicitados
 
 ## Exemplo de Uso
 

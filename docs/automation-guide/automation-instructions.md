@@ -20,7 +20,45 @@ Ao solicitar a automação de uma nova API, eu seguirei a seguinte estrutura:
 2. Identificar dependências e ordem de execução
 3. Definir estrutura de schemas necessária (usando o padrão nomeSchema)
 4. Planejar cenários de teste
-5. Implementar seguindo os padrões do projeto
+5. **CONFIRMAR PLANO COM O USUÁRIO**
+6. Implementar seguindo os padrões do projeto
+
+### ⚠️ IMPORTANTE: Confirmação do Plano de Execução
+
+**SEMPRE antes de executar o plano, o agente deve:**
+
+1. **Explicar o plano detalhadamente:**
+   - Quais arquivos serão criados/modificados
+   - Estrutura de features que será implementada
+   - Schemas que serão criados
+   - Endpoints que serão cobertos
+
+2. **Apresentar exemplo da estrutura:**
+   ```
+   Vou criar a seguinte estrutura:
+   
+   📁 cypress/e2e/features/
+   ├── get-products.feature         # Cenários: busca com sucesso, filtros, paginação
+   ├── post-products.feature        # Cenários: criação com sucesso, validações
+   └── get-products-by-id.feature   # Cenários: busca por ID válido/inválido
+   
+   📁 cypress/support/schemas/
+   └── products-schemas.js          # productSchema, productListSchema
+   
+   📁 cypress/support/requests/
+   └── productRequests.js           # Handlers das requisições
+   ```
+
+3. **Perguntar explicitamente:**
+   ```
+   "Você gostaria de alterar algo neste plano antes de eu executar? 
+   Por exemplo:
+   - Adicionar/remover cenários?
+   - Modificar a estrutura de arquivos?
+   - Incluir validações específicas?"
+   ```
+
+4. **Aguardar confirmação** antes de proceder com a implementação
 
 ## Exemplo de Interação
 

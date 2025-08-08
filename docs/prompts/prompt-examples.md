@@ -31,11 +31,39 @@ Agente: "Vou ajudar com isso. Primeiro, preciso de algumas informações:
 
 [Após receber as respostas]
 
-Agente: "Baseado nas informações, vou:
-1. Criar os schemas necessários em 'cypress/support/schemas/'
-2. Implementar a classe ProductRequests em 'cypress/support/requests/'
-3. Criar os cenários em 'cypress/e2e/features/'
-4. Implementar os steps em 'cypress/e2e/step_definitions/'"
+Agente: "Baseado nas informações, vou criar o seguinte plano:
+
+📋 **PLANO DE EXECUÇÃO**
+
+**Estrutura que será criada:**
+```
+cypress/e2e/features/
+├── get-products.feature      # Buscar produtos (sucesso, filtros, paginação)
+├── post-products.feature     # Criar produto (válido, inválido, duplicado)
+└── get-products-id.feature   # Buscar por ID (existente, inexistente)
+
+cypress/support/schemas/
+└── products-schemas.js       # productSchema, productListSchema
+
+cypress/support/requests/
+└── productRequests.js        # ProductRequests.getAll(), .create(), .getById()
+
+cypress/e2e/step_definitions/
+└── products.js              # Steps reutilizáveis para produtos
+```
+
+**Cenários planejados:**
+- GET /products: busca com sucesso (200), filtros, erro sem auth (401)
+- POST /products: criação válida (201), dados inválidos (422), duplicado (409)
+- GET /products/{id}: busca por ID existente (200), ID inexistente (404)
+
+🤔 **Você gostaria de alterar algo neste plano antes de eu executar?**
+- Adicionar/remover cenários específicos?
+- Modificar a estrutura de arquivos?
+- Incluir validações adicionais?
+- Ajustar nomenclaturas?
+
+[Aguardar confirmação antes de proceder]"
 
 ## Documentação Relacionada
 - Padrões de implementação: '/docs/patterns/'
