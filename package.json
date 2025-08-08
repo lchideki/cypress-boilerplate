@@ -1,0 +1,27 @@
+{
+  "name": "cypress-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.2.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.5",
+    "ajv": "^8.17.1",
+    "cypress": "^14.5.4",
+    "joi": "^18.0.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": false,
+    "stepDefinitions": [
+      "cypress/e2e/step_definitions/*.js",
+      "cypress/e2e/step_definitions/**/*.js"
+    ]
+  }
+}

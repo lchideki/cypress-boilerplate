@@ -1,0 +1,256 @@
+openapi: 3.0.2
+info:
+  title: B3 NRTC Reference Data API
+  description: B3 NRTC Calendar Reference Data API
+  x-api-group: b3
+  x-current-version: true
+  version: 1.0.0
+servers:
+- url: /reference-data/api/b3/v1
+- url: /api/b3/v1
+security:
+- bearerToken: []
+tags:
+- name: accountLink
+  description: Management of accountLink entities
+- name: userRoleList
+  description: Management of roles from B3 identity manager
+- name: user
+  description: Management of users from B3 identity manager
+- name: reconciliation
+  description: SINCAD/NRTC reconciliation
+- name: eod
+  description: B3 EOD management
+- name: memberLink
+  description: Management of memberLink entities
+- name: member
+  description: Management of member entities
+paths:
+  /account-link:
+    get:
+      tags:
+      - accountLink
+      summary: Get account-link(s)
+      description: Get the details of the account link(s), including the account links(s), for the specified filter criteria
+      operationId: getAccountLink
+      parameters:
+      - in: query
+        name: ObservedRevisionsList
+        required: false
+        description: |
+          List of already observed revisions. Format: RevisionSequence=RevisionNumber
+        schema:
+          type: array
+          items:
+            type: string
+          example:
+          - RFM_1_CurrencyEvent=1
+          - RFM_1_AccountEvent=5
+      - in: query
+        name: pageSize
+        description: Limit to the number of entries to be returned. Will default to a default page-size if not set.
+        schema:
+          type: integer
+          format: int32
+        required: false
+      - in: query
+        name: bookmark
+        description: |
+          MUST be supplied if paging, otherwise MUST NOT be set. A bookmark will be returned if results exceed page size. Supply the last received bookmark in subsequent requests to get the next page of results.
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: accountLinkId
+        required: false
+        description: Get the account with ID equal to the supplied value.
+        schema:
+          type: string
+          format: int64
+      - in: query
+        name: linkType
+        required: false
+        description: Get the account with link type equal to the supplied value.
+        schema:
+          $ref: '#/components/schemas/AccountLinkType'
+      - in: query
+        name: linkStatus
+        required: false
+        description: Get the account link with link status equal to the supplied value.
+        schema:
+          $ref: '#/components/schemas/AccountLinkStatus'
+      responses:
+        '200':
+          description: Successfully retrieved account-links.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountLinkRsp'
+    put:
+      tags:
+      - accountLink
+      summary: Set an account link
+      description: Request to set an account link to the system.
+      operationId: setAccountLink
+      requestBody:
+        description: Data describing the account link.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAccountLink'
+      responses:
+        '200':
+          description: The account link was successfully set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetAccountLinkRsp'
+  /user:
+    get:
+      tags:
+      - user
+      summary: finds an user
+      description: Request to find an user sent by the B3 IDM
+      operationId: getUsers
+      parameters:
+      - in: query
+        name: userName
+        description: The user name
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: externalMemberId
+        description: The B3 Participant ID
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUsersRsp'
+    put:
+      tags:
+      - user
+      summary: adds/updates an user
+      description: Request to set an user sent by the B3 IDM
+      operationId: addUser
+      requestBody:
+        description: The User information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUser'
+      responses:
+        '200':
+          description: Operation executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetUserRsp'
+    delete:
+      tags:
+      - user
+      summary: Delete an b3 user
+      description: Request to remove the specified user
+      operationId: deleteUser
+      requestBody:
+        description: Data describing the user to be removed.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteUser'
+      responses:
+        '200':
+          description: The user was successfully removed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserRsp'
+  /member-link:
+    get:
+      tags:
+      - memberLink
+      summary: Get member-link(s).
+      description: Request to find a member link
+      operationId: getMembersLinks
+      parameters:
+      - in: query
+        name: memberLinkId
+        description: Get the member link with the memberId equal to the supplied value.
+        required: false
+        schema:
+          type: string
+          format: int64
+      responses:
+        '200':
+          description: Successfully retrieved member-links.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMembersLinksRsp'
+  /member-link/detail:
+    get:
+      tags:
+      - memberLink
+      summary: Get member-link(s) details.
+      description: Request to find a member link detail
+      operationId: getMembersLinksDetails
+      parameters:
+      - in: query
+        name: bookmark
+        description: |
+          MUST be supplied if paging, otherwise MUST NOT be set. A bookmark will be returned if results exceed page size. Supply the last received bookmark in subsequent requests to get the next page of results.
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: memberLinkId
+        description: Get the member link detail with the memberLinkId equal to the supplied value.
+        required: true
+        schema:
+          type: string
+          format: int64
+      responses:
+        '200':
+          description: Successfully retrieved member-links.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMembersLinksDetailsRsp'
+components:
+  securitySchemes:
+    bearerToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Link:
+      properties:
+        participantId:
+          type: string
+        businessStatus:
+          type: string
+        systemStatus:
+          type: string
+    GetMembersLinksRsp:
+      properties:
+        atEnd:
+          $ref: '#/components/schemas/AtEnd'
+        bookmark:
+          $ref: '#/components/schemas/Bookmark'
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberLink'
+        currentRevisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Revision'
+    # ... (outros schemas permanecem iguais)

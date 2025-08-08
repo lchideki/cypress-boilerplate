@@ -1,0 +1,19 @@
+{
+  "user": {
+    "type": "object",
+    "required": ["id", "name", "email"],
+    "properties": {
+      "id": { "type": "number" },
+      "name": { "type": "string" },
+      "email": { "type": "string", "format": "email" }
+    }
+  },
+  "error": {
+    "type": "object",
+    "required": ["code", "message"],
+    "properties": {
+      "code": { "type": "number" },
+      "message": { "type": "string" }
+    }
+  }
+}
